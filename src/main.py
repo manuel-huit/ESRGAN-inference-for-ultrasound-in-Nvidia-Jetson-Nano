@@ -1,4 +1,30 @@
-1  #import CV
+1
+"""
+Script: main.py
+Description: This is the main program, once the ESRGAN is trained, we took the .pth file to perform inference in this script.
+             It has two modes to work: 
+             - It can capture video from a video capture usb card (via HDMI) and applying super resolution
+             - It can take a low resolution ultrasound's image preloaded and applying super resolution
+             The idea is to use old ultrasound machines (with low resolution images) and transform them in high res
+             machines. 
+
+Author: Manuel Huitrado
+Date: June 2026 (originaly created in 2024)
+Versión: 1.0.0
+Licence: MIT License (as origanly created by eriklindernoren )
+
+Dependencies:
+- opencv
+- numpy
+- torch
+- PIL
+- argpase
+- os
+- time
+- PyTorch-GAN by eriklindernoren (models)
+"""
+
+#import CV
 2  import numpy as np
 3  import cv2 as cv
 4  
@@ -15,7 +41,7 @@
 15 
 16 #import time
 17 import time
-18 
+18 VERSION = "1.0.0"
 19 
 20 '''mouse click events'''
 21 #define limits of the screen size
@@ -66,13 +92,13 @@
 66     print("can not receive frame")
 67     break
 68 
-69   #first button
+69   #first button  for image hardcoded
 70   button_upper_coord=(0,0)
 71   button_bottom_coord=(70,50)
 72   cv.rectangle(frame, button_upper_coord, button_bottom_coord ,(0,0,240),2)
 73 
 74  
-75   #second button
+75   #second button for ROI (region of interest)
 76   button_upper_coord=(80,0)
 77   button_bottom_coord=(150,50)
 78   cv.rectangle(frame, button_upper_coord, button_bottom_coord ,(240,0,0),2) 
@@ -88,7 +114,7 @@
 88   if cv.waitKey(1) == ord('q'):
 89     break
 90 
-91   #original = 4
+91   #original = 4 click on button to upscale ROI
 92   if evt==4:
 93 
 94     print(pnt1[0])
@@ -101,7 +127,7 @@
 101      #ROI to super resolution
 102      image_tensor = Variable(transform(ROI)).to(device).unsqueeze(0)  
 103
-104      #Upsample image
+104      #Upsample image from capture
 105      with torch.no_grad():
 106        sr_image = denormalize(generator(image_tensor)).cpu()
 107
@@ -112,16 +138,17 @@
 112      time.sleep(7)
 113
 114      evt=0
-115   
+
+115  #original = 4 click on button to upscale preloaded image
 116  if evt==4:
 117    if ( ((pnt1[0] >  0) and (pnt1[0] <  70)) and ((pnt1[1] >  0)  and    (pnt1[1] <  50)) ):
 118
 119     
-120      # Prepare input
+120      # Prepare input, this can be changed in order to load images on the fly
 121      image_path="./images/inputs/bilineal-IMG_2023.jpg"
 122      image_tensor = Variable(transform(Image.open(image_path))).to(device).unsqueeze(0)
 123
-124      # Upsample image
+124      # Upsample image from hardcoded file
 125      with torch.no_grad():
 126        sr_image = denormalize(generator(image_tensor)).cpu()
 127
