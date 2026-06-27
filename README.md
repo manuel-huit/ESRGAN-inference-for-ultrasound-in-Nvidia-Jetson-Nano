@@ -6,6 +6,10 @@ In this work, evaluations were carried out of different super resolution techniq
 The results obtained revealed an improvement in image quality by ESRGAN, according to human visual perception. This finding motivated the determination to implement the ESRGAN technique in an embedded system with Deep Learning capabilities, specifically on the Jetson Nano platform. Although optimizations to the trained model are required to maximize its performance in the embedded system environment, the resulting prototype is seen as a promising technological advance with a positive impact on the diagnosis and monitoring of diseases using ultrasound.
 
 
+![architecture](./images/ESRGAN_Device.jpg)
+
+
+
 ---
 
 ## Characteristics
