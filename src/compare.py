@@ -1,4 +1,28 @@
-1  import math
+1
+
+"""
+Script: compare.py
+Description: Script aimed to compare 2 images: the original high resolution image vs low resolution images upscaled by ESRGAN. 
+             The idea is to calculate PNSR and SSIM over a region of interest. This is helpful to measure the performance
+             of the ESRGAN against other methods of super resolution.
+
+Author: Manuel Huitrado
+Date: June 2026 (originaly created in 2024)
+Versión: 1.0.0
+Licence: MIT License (as origanly created by eriklindernoren )
+
+Dependencies:
+- opencv
+- math
+- numpy
+- argparse
+- os
+- time
+- glob
+- the SSIM and PSNR algorithms were taken from missing website links
+"""
+
+import math
 2  import numpy as np
 3  import cv2
 4  import argparse
